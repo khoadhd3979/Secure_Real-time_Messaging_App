@@ -1,19 +1,3 @@
-Dựa vào ảnh bạn cung cấp, bạn đã đổi tên file thành `README.md` thành công. Tuy nhiên, nguyên nhân file vẫn hiển thị thành một khối chữ lộn xộn là do **nội dung chữ bạn dán vào đã bị mất hoàn toàn các dấu xuống dòng (Enter)**.
-
-Ngôn ngữ Markdown (`.md`) bắt buộc phải có dấu xuống dòng để phân biệt đâu là tiêu đề (có dấu `#`), đâu là danh sách (có dấu `*`), và đâu là đoạn văn. Nếu tất cả dính liền vào nhau, GitHub sẽ tự động gom toàn bộ thành một đoạn văn duy nhất.
-
-**Cách khắc phục dứt điểm:**
-
-1. Trên trang GitHub, bấm lại vào biểu tượng hình cây bút chì (Edit) ở file `README.md`.
-
-
-2. **Xóa sạch toàn bộ** nội dung đang bị dính chùm đó đi.
-3. Rê chuột lên góc trên cùng bên phải của khối chữ màu đen bên dưới đây, bấm vào nút **Copy (Sao chép)**. Việc copy bằng nút này sẽ giúp giữ nguyên 100% các phím Enter xuống dòng.
-4. Dán nội dung vừa copy vào lại GitHub và kéo xuống bấm **Commit changes...**.
-
-Dưới đây là nội dung chuẩn để bạn copy:
-
-```markdown
 # Đồ án: SecureChat-Java - Ứng dụng Nhắn tin Thời gian thực
 
 > Hệ thống ứng dụng chat nhắn tin thời gian thực qua mạng, hỗ trợ đa luồng và mã hóa dữ liệu.
