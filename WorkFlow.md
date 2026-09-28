@@ -1,41 +1,92 @@
-| Giai đoạn phát triển | Nhiệm vụ của Khoa (Backend Server & Database) | Nhiệm vụ của Sự (Client GUI & Xử lý Socket) |
+
+# Quy trình Làm việc nhóm & Phân công Dự án (SecureChat-Java)
+
+Tài liệu này quy định luồng làm việc với Git/GitHub và chi tiết phân công công việc cho từng giai đoạn của dự án.
+
+---
+
+### 1. Chiến lược Quản lý Nhánh (Branching)
+
+Tuyệt đối **KHÔNG** code trực tiếp hoặc push thẳng lên nhánh `main`.
+
+* **`main`**: Nhánh trung tâm chứa code ổn định, đã qua kiểm thử và chạy hoàn chỉnh.
+* **`feature/khoa-server-db`**: Nhánh làm việc độc lập của Khoa (Xử lý Backend Server, Database, Cryptography).
+* **`feature/tho-client-gui`**: Nhánh làm việc độc lập của Thọ (Xử lý Client GUI, Logic luồng màn hình, Đóng gói gói tin).
+
+---
+
+### 2. Quy trình làm việc hằng ngày (Daily Workflow)
+
+Mỗi khi bắt đầu hoặc kết thúc một buổi code, các thành viên thực hiện theo vòng lặp sau trên máy tính cá nhân:
+
+### Bước 1: Đảm bảo đang đứng đúng nhánh của mình
+```bash
+git checkout feature/ten-nhanh-cua-ban
+
+```
+
+### Bước 2: Viết code và Lưu thay đổi
+
+Sau khi hoàn thành một chức năng nhỏ (ví dụ: tạo form đăng nhập, tạo kết nối CSDL), đưa các file vào trạng thái chuẩn bị:
+
+```bash
+git add .
+
+```
+
+### Bước 3: Commit (Lưu lịch sử cục bộ)
+
+Ghi chú rõ ràng, ngắn gọn về chức năng vừa làm:
+
+```bash
+git commit -m "Mô tả ngắn gọn chức năng vừa làm (VD: Thêm giao diện chat nhóm)"
+
+```
+
+### Bước 4: Push (Đẩy lên GitHub)
+
+Đẩy code lên đúng nhánh làm việc của mình:
+
+```bash
+git push origin feature/ten-nhanh-cua-ban
+
+```
+
+---
+
+## 3. Quy trình Gộp Code vào nhánh Main (Pull Request)
+
+Khi một module chức năng đã hoàn thiện và chạy thông suốt trên nhánh cá nhân, tiến hành gộp vào nhánh chung:
+
+1. Truy cập kho lưu trữ GitHub của dự án trên trình duyệt.
+2. Chuyển sang nhánh cá nhân của bạn, bấm nút **Compare & pull request**.
+3. Đợi thành viên còn lại kiểm tra (review) code. Nếu không có xung đột, bấm **Merge pull request** để gộp mã nguồn vào nhánh `main`.
+4. **Đồng bộ code về máy tính:** Thành viên còn lại (hoặc cả hai) cần kéo code mới nhất từ `main` về máy để tiếp tục làm việc trên nền code mới nhất:
+```bash
+git checkout main
+git pull origin main
+git checkout feature/ten-nhanh-cua-ban
+
+```
+
+
+
+---
+
+## 4. Phân công Công việc Chi tiết
+
+Dự án áp dụng chiến lược phát triển: **"Xây dựng luồng nhắn tin thời gian thực (text thô) trước, sau đó tích hợp mã hóa (RSA/AES) vào sau"** nhằm đảm bảo tính ổn định của Socket đa luồng.
+
+| Giai đoạn | Khoa (Backend Server & Database) `feature/khoa-server-db` | Thọ (Client UI & Packet Payload) `feature/tho-client-gui` |
 | --- | --- | --- |
-| **1. Cấu trúc nền tảng & Đăng nhập** | - Thiết kế các bảng CSDL (tài khoản, tin nhắn, bạn bè, nhóm).<br>
+| **1. Nền tảng & Đăng nhập** | Thiết kế CSDL (bảng User, Message, Group). Viết các lớp DTO/DAO/BLL. Tích hợp API Email OTP. | Dùng Swing thiết kế form Đăng nhập/Đăng ký. Validate dữ liệu đầu vào. Tạo Socket Client kết nối cơ bản. |
+| **2. Đa luồng & Chat 1-1** | Khởi tạo kiến trúc Server Multithreading quản lý danh sách Socket kết nối. Viết hàm truy xuất lịch sử chat. | Thiết kế giao diện Dashboard & Khung chat. Xử lý truyền/nhận tin nhắn text thô qua Socket và render lên UI. |
+| **3. Mở rộng Nhóm & File** | Viết BLL xử lý logic tạo nhóm, quản lý thành viên. Tạo luồng stream nhận, lưu trữ file đính kèm/sticker. | Giao diện Popup tạo nhóm. Viết thuật toán phân mảnh gói dữ liệu (packet) để gửi file đính kèm dưới 1MB. |
+| **4. Ghép Mã hóa (Bảo mật)** | Cài đặt thuật toán mã hóa bất đối xứng RSA (Sinh khóa / Cấp phát khóa phiên). | Đóng gói hàm `sendMessage`/`receiveMessage` qua class trung gian `SecurityUtils` (Mã hóa đối xứng AES). |
+| **5. Trạng thái & Quản trị** | Xử lý logic Broadcast báo hiệu Online/Offline. Ghi Log hệ thống. Viết API Khóa tài khoản. | Thiết kế UI phân trang tin nhắn (tải tin cũ). Cập nhật trạng thái "đã gửi/nhận/xem". Chức năng chặn (Block). |
 
-<br>- Chú ý thiết lập giá trị mặc định (default) chặt chẽ cho các cột "trạng thái" để tránh lỗi truy vấn null khi lấy dữ liệu.<br>
+---
 
-<br>- Xây dựng toàn bộ kiến trúc DTO/DAO/BLL cho Server.<br>
+## 5. Quy chuẩn Giao tiếp Dữ liệu (Packet Concept)
 
-<br>- Viết module tích hợp Java Mail để gửi mã OTP xác thực (10 phút). | - Dùng Java Swing thiết kế giao diện: Đăng nhập, Đăng ký, Nhập mã OTP.<br>
-
-<br>- Viết các hàm kiểm tra (validate) định dạng email, độ dài mật khẩu trực tiếp trên UI.<br>
-
-<br>- Tạo Socket Client kết nối đến Server và gửi/nhận tín hiệu đăng nhập cơ bản. |
-| **2. Đa luồng, Mã hóa & Chat 1-1** | - Xây dựng Server đa luồng (Multithreading) quản lý danh sách các Socket Client đang kết nối.<br>
-
-<br>- Cài đặt thuật toán sinh khóa RSA và tạo luồng cấp phát khóa cho Client.<br>
-
-<br>- Viết các hàm DAO/BLL lưu và truy xuất lịch sử chat 1-1. | - Thiết kế giao diện Dashboard chính: Danh sách bạn bè và Khung chat 1-1.<br>
-
-<br>- Viết logic mã hóa/giải mã đối xứng (AES) cho text trước khi đẩy qua kênh truyền Socket.<br>
-
-<br>- Lắng nghe dữ liệu từ Server và render tin nhắn mới lên màn hình. |
-| **3. Mở rộng Chat Nhóm & Xử lý File** | - Viết BLL xử lý nghiệp vụ tạo nhóm, cấp quyền admin, thêm/mời/xóa thành viên.<br>
-
-<br>- Viết luồng stream nhận, mã hóa và lưu trữ file đính kèm/sticker từ Client.<br>
-
-<br>- Ghi log toàn bộ hoạt động tạo nhóm, đăng nhập vào CSDL. | - Thiết kế Popup UI tạo nhóm chat, thêm thành viên.<br>
-
-<br>- Cài đặt thuật toán chia nhỏ gói dữ liệu (packet phân mảnh) để gửi file đính kèm dưới 1MB qua mạng.<br>
-
-<br>- Viết component hiển thị ảnh/sticker ngay trong luồng chat. |
-| **4. Trạng thái, Phân trang & Quản trị** | - Xử lý logic Broadcast: Quét danh sách Socket để báo trạng thái Online/Offline cho bạn bè của user.<br>
-
-<br>- Viết API nội bộ cập nhật trạng thái tin nhắn (đã gửi/nhận/xem).<br>
-
-<br>- Tạo luồng xử lý khóa (block) tài khoản từ Server. | - Thiết kế nút "Tải thêm tin nhắn cũ" và xử lý UI phân trang lịch sử chat.<br>
-
-<br>- Lắng nghe Broadcast để cập nhật chấm xanh (Online) trên danh sách bạn bè.<br>
-
-<br>- Thêm nút chặn (Block) trên UI và vô hiệu hóa khung chat khi bị chặn. |
-
+Để thuận tiện cho việc "đắp" lớp mã hóa ở Giai đoạn 4, luồng dữ liệu truyền tải giữa Client và Server sẽ không truyền chuỗi tự do, mà được chuẩn hóa theo định dạng nhất quán (Ví dụ: Sử dụng JSON format hoặc String phân cách `[ACTION]|[SENDER]|[DATA]`) trước khi đẩy vào `DataOutputStream`.
