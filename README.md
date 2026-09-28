@@ -87,14 +87,14 @@ Dự án được chia cho **2 thành viên** nhằm tối ưu việc quản lý
     * Xây dựng chức năng thống kê, ghi log và quản lý block trên Server.
 * **Branch làm việc:** `feature/khoa-server-db`
 
-### Thành viên 2: Thọ (Client UI, Logic xử lý & Packet payload)
+### Thành viên 2: Sự (Client UI, Logic xử lý & Packet payload)
 * **Nhiệm vụ:**
     * Thiết kế toàn bộ Client GUI bằng Java Swing.
     * Xử lý logic luồng màn hình: Đăng ký/Đăng nhập -> Dashboard -> Khung chat 1-1/Nhóm.
     * Xử lý chia nhỏ gói dữ liệu để gửi file đính kèm dưới 1MB qua Socket.
     * Render trạng thái tin nhắn (đã gửi/nhận/xem) và xử lý UI phân trang lịch sử chat.
     * Lắng nghe Broadcast từ Server để cập nhật trạng thái online/offline của danh sách bạn bè.
-* **Branch làm việc:** `feature/tho-client-gui`
+* **Branch làm việc:** `feature/su-client-gui`
 
 ---
 
