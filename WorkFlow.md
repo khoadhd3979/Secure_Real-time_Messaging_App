@@ -11,7 +11,7 @@ Tuyệt đối **KHÔNG** code trực tiếp hoặc push thẳng lên nhánh `ma
 
 * **`main`**: Nhánh trung tâm chứa code ổn định, đã qua kiểm thử và chạy hoàn chỉnh.
 * **`feature/khoa-server-db`**: Nhánh làm việc độc lập của Khoa (Xử lý Backend Server, Database, Cryptography).
-* **`feature/tho-client-gui`**: Nhánh làm việc độc lập của Sự (Xử lý Client GUI, Logic luồng màn hình, Đóng gói gói tin).
+* **`feature/su-client-gui`**: Nhánh làm việc độc lập của Sự (Xử lý Client GUI, Logic luồng màn hình, Đóng gói gói tin).
 
 ---
 
