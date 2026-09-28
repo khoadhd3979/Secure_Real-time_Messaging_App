@@ -11,7 +11,7 @@ Tuyệt đối **KHÔNG** code trực tiếp hoặc push thẳng lên nhánh `ma
 
 * **`main`**: Nhánh trung tâm chứa code ổn định, đã qua kiểm thử và chạy hoàn chỉnh.
 * **`feature/khoa-server-db`**: Nhánh làm việc độc lập của Khoa (Xử lý Backend Server, Database, Cryptography).
-* **`feature/tho-client-gui`**: Nhánh làm việc độc lập của Thọ (Xử lý Client GUI, Logic luồng màn hình, Đóng gói gói tin).
+* **`feature/tho-client-gui`**: Nhánh làm việc độc lập của Sự (Xử lý Client GUI, Logic luồng màn hình, Đóng gói gói tin).
 
 ---
 
@@ -77,7 +77,7 @@ git checkout feature/ten-nhanh-cua-ban
 
 Dự án áp dụng chiến lược phát triển: **"Xây dựng luồng nhắn tin thời gian thực (text thô) trước, sau đó tích hợp mã hóa (RSA/AES) vào sau"** nhằm đảm bảo tính ổn định của Socket đa luồng.
 
-| Giai đoạn | Khoa (Backend Server & Database) `feature/khoa-server-db` | Thọ (Client UI & Packet Payload) `feature/tho-client-gui` |
+| Giai đoạn | Khoa (Backend Server & Database) `feature/khoa-server-db` | Sự (Client UI & Packet Payload) `feature/tho-client-gui` |
 | --- | --- | --- |
 | **1. Nền tảng & Đăng nhập** | Thiết kế CSDL (bảng User, Message, Group). Viết các lớp DTO/DAO/BLL. Tích hợp API Email OTP. | Dùng Swing thiết kế form Đăng nhập/Đăng ký. Validate dữ liệu đầu vào. Tạo Socket Client kết nối cơ bản. |
 | **2. Đa luồng & Chat 1-1** | Khởi tạo kiến trúc Server Multithreading quản lý danh sách Socket kết nối. Viết hàm truy xuất lịch sử chat. | Thiết kế giao diện Dashboard & Khung chat. Xử lý truyền/nhận tin nhắn text thô qua Socket và render lên UI. |
